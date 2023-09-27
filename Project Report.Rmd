@@ -49,6 +49,14 @@ After cleaning, all of the info on the dataset describe above is still true, oth
 
 ## Exploratory Data Analysis
 <b>some stuff here</b>
+```{r}
+ggplot(pet_data, aes(x = dogDevScore, y = spend4kPerc))+
+  geom_point(color="salmon") +
+  stat_smooth(method = "lm", col="lightblue", se=FALSE ,size=1)+ #lm = linear regression
+  labs(title = "Percent of Dog Owners who would spend 4k to save dog compared to Dog Devotion Score", x = "Dog Devotion Score", y = "% Dog Owner Willing to Spend 4k") +
+  theme_dark()
+
+```
 
 ## General Conclusion
 <b>some stuff here</b>
