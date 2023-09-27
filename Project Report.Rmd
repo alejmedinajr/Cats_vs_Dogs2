@@ -1,0 +1,25 @@
+---
+title: "Cats vs Dogs in the US"
+author: "Katherine Blake, Jorge Diaz, Alejandro Medina and Mark Mueller"
+date: "2023-09-27"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+
+## Initial Observations
+<b>some stuff here</b>
+
+## Cleaning the Data
+<b>some stuff here</b>
+
+## Exploratory Data Analysis
+<b>some stuff here</b>
+
+## General Conclusion
+<b>some stuff here</b>
