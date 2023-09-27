@@ -50,5 +50,25 @@ After cleaning, all of the info on the dataset describe above is still true, oth
 ## Exploratory Data Analysis
 <b>some stuff here</b>
 
+### 4. Comapring Spacial correlation with areas where pet owners were willing to spend $4k to save their dog. 
+
+For this section we pulled from another dataset to get the median household income per state. This was found here: https://worldpopulationreview.com/state-rankings/median-household-income-by-state
+
+```{r}
+# Loading in the income into med_income
+med_income <- read.csv(here("DATA","median-household-income-by-state-[updated-august-2023].csv"))
+str(med_income)
+```
+Once again this data must be cleaned because it has data for DC, Alaska and Hawaii, and the columns need to be renamed to allow for it to be made into a map.
+
+```{r}
+#TODO, clean data by dropping rows
+
+
+# Renaming the columns for easier usage
+colnames(med_income) <- c("region","income")
+head(med_income)
+```
+
 ## General Conclusion
 <b>some stuff here</b>
