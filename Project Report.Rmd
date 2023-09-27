@@ -10,9 +10,25 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Introduction
+```{r}
+# loading in packages needed for the project
+library(here) # used for finding the location of the data set file
+library(maps) # used for map visualization code
+library(ggplot2) # used for ggplot
+library(dplyr) # used to aid in functionality use of visualizations
 
+# loading in the data as pet_data
+pet_data = read.csv(here("DATA","pet-ownership-statistics-by-state_Group2.csv"))
+
+```
 
 ## Initial Observations
+
+```{r}
+head(pet_data) # viewing the first six rows of data
+dim(pet_data) # viewing the dimensions of the data
+str(pet_data) # viewing the structure of the data
+```
 <b>some stuff here</b>
 
 ## Cleaning the Data
