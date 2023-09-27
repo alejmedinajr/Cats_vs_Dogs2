@@ -32,7 +32,20 @@ str(pet_data) # viewing the structure of the data
 <b>some stuff here</b>
 
 ## Cleaning the Data
-<b>some stuff here</b>
+In our data set, Hawaii and Alaska were omitted and Washington DC only has data on the total household percentage. Because of this, we have decided to omit DC completely.
+```{r}
+# Omitting rows with no data
+pet_data <- na.omit(pet_data)
+str(pet_data)
+```
+In pet_data, we now only have the 48 states we want to look at. The next thing we should do is rename the column names to make it possible to generate graphs and easier to work with. 
+```{r}
+# Changing 'state' to 'region' and shortening column names
+colnames(pet_data) <- c("region","householdPerc",	"dogsPerc",	"avgNumDogs",	"catsPerc",	"avgNumCats",	"dogDevScore",	"jobDislikePerc",	"spend4kPerc")
+head(pet_data)
+```
+After cleaning, all of the info on the dataset describe above is still true, other than the names of the columns being changed and dropping the row containing DC. Several column names were changed in order to shorten them, dogDevScore which stands for the dog devotion score, jobDislikePerc stands for the percentage of people that stayed at a job they disliked for their dog, and spend4kPerc stands for the percentage of people that would spend $4,000 to save their dog. 
+
 
 ## Exploratory Data Analysis
 <b>some stuff here</b>
