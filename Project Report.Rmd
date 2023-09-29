@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Introduction
+<BR><b>The data we are analyzing is in regards to pet ownership statistics in the United States. The data includes averages of cats and dogs within state households as well as pet owner's devotion to their pets, whether the owners are willing to stay at a job they dislike for their pets, and whether the owner’s were willing to spend $4k to save their pets.</b><BR>
 ```{r}
 # loading in packages needed for the project
 library(here) # used for finding the location of the data set file
@@ -29,26 +30,56 @@ head(pet_data) # viewing the first six rows of data
 dim(pet_data) # viewing the dimensions of the data
 str(pet_data) # viewing the structure of the data
 ```
-<b>some stuff here</b>
+<BR><b>As we go through the nature of the data, we can clearly see the dimensions of the data being 49 observations against 9 variables. These variables are the State, Total Household percentage, Dogs Percentage, Average Number of Dogs, Cats percentage, Average Number of cats, Dogs devotion score, Staying at a job they disliked for dog percentage and Would you spend 4k to save a dog percentage. The structure of the data tells us that the State is the only variable classified as a character; while the others are numeric.</b><BR>
 
 ## Cleaning the Data
-In our data set, Hawaii and Alaska were omitted and Washington DC only has data on the total household percentage. Because of this, we have decided to omit DC completely.
+<b>In our data set, Hawaii and Alaska were omitted and Washington DC only has data on the total household percentage. Because of this, we have decided to omit DC completely.</b>
 ```{r}
 # Omitting rows with no data
 pet_data <- na.omit(pet_data)
 str(pet_data)
 ```
-In pet_data, we now only have the 48 states we want to look at. The next thing we should do is rename the column names to make it possible to generate graphs and easier to work with. 
+<b>In pet_data, we now only have the 48 states we want to look at. The next thing we should do is rename the column names to make it possible to generate graphs and easier to work with.</b> 
 ```{r}
 # Changing 'state' to 'region' and shortening column names
 colnames(pet_data) <- c("region","householdPerc",	"dogsPerc",	"avgNumDogs",	"catsPerc",	"avgNumCats",	"dogDevScore",	"jobDislikePerc",	"spend4kPerc")
 head(pet_data)
 ```
-After cleaning, all of the info on the dataset describe above is still true, other than the names of the columns being changed and dropping the row containing DC. Several column names were changed in order to shorten them, dogDevScore which stands for the dog devotion score, jobDislikePerc stands for the percentage of people that stayed at a job they disliked for their dog, and spend4kPerc stands for the percentage of people that would spend $4,000 to save their dog. 
+<b>After cleaning, all of the info on the dataset describe above is still true, other than the names of the columns being changed and dropping the row containing DC. Several column names were changed in order to shorten them, dogDevScore which stands for the dog devotion score, jobDislikePerc stands for the percentage of people that stayed at a job they disliked for their dog, and spend4kPerc stands for the percentage of people that would spend $4,000 to save their dog.</b> 
 
 
 ## Exploratory Data Analysis
-<b>some stuff here</b>
+
+```{r}
+pet_data$region <- tolower(pet_data$region)
+state_map <- map_data("state")
+state_map_pets <- left_join(state_map,pet_data, by = "region")
+head(state_map_pets)
+household_graph <- ggplot(state_map_pets, aes(x= long, y = lat, group = group)) +
+  geom_polygon(aes(fill = householdPerc)) +
+  scale_fill_viridis_c() # Create map on total house percentage
+household_graph # View graph
+
+```
+<BR><B>Most states had a total household percentage of pets higher than 55%. With this, we can know that it is more common for a household in the United States to have a pet than to not. </B><BR>
+
+```{r}
+ggplot(pet_data, aes(x=dogsPerc))+ geom_boxplot()
+ggplot(pet_data, aes(x=catsPerc))+ geom_boxplot()
+
+```
+<BR><b>In both graphs we can see the distribution of higher percentages in the Dogs Percentages data; while the lower percentages are given to the Cats.  The median for dogs would be just below 40; while for cats the median would be just above 25. This median interpretation means that the distribution of dogs' percentages is higher than cats. This tells us the strong preference of people for owning dogs.</b><BR>
+
+```{r}
+ggplot(pet_data, aes(x = dogDevScore, y = jobDislikePerc))+
+  geom_point(color="salmon") +
+  stat_smooth(method = "lm", col="lightblue", se=FALSE ,size=1)+ #lm = linear regression
+  labs(title = "Percent of Dog Owners who would stay at a job they dislike according to Dog Devotion Score", x = "Dog Devotion Score", y = "jobDislike") +
+  theme_dark()
+
+```
+<BR><b>There was no clear correlation for the dog devotion score or the percent for each state of people willing to spend 4k to save their dog. Since there was no correlation, this simply means there was no clear trend to indicate that a higher likelihood of spending 4k on their dog would be matched by a higher dog devotion score.</b><BR> 
+
 ```{r}
 ggplot(pet_data, aes(x = dogDevScore, y = spend4kPerc))+
   geom_point(color="salmon") +
@@ -57,17 +88,32 @@ ggplot(pet_data, aes(x = dogDevScore, y = spend4kPerc))+
   theme_dark()
 
 ```
+<BR><b>There was no clear correlation for the willingness to stay at a disliked job for each state and the dog devotion score. Since there was no correlation, this simply means there was no clear trend to indicate that a higher likelihood of staying at a disliked job because of the dog would be matched by a higher dog devotion score.</b><BR> 
+
+
+```{r}
+pet_data$region <- tolower(pet_data$region)
+state_map <- map_data("state")
+state_map_pets <- left_join(state_map,pet_data, by = "region")
+head(state_map_pets)
+fourK_graph <- ggplot(state_map_pets, aes(x= long, y = lat, group = group)) +
+  geom_polygon(aes(fill = spend4kPerc)) +
+  scale_fill_viridis_c() # Create map on total house percentage
+fourK_graph # View graph
+
+```
+<br><b>Most states were under 45% in regards to whether they would spend up to $4k to save their dog. The states with higher percentages (45%-50%) were located along the mid West coast and the upper East coast.</b>
 
 ### 4. Comapring Spacial correlation with areas where pet owners were willing to spend $4k to save their dog. 
 
-For this section we pulled from another dataset to get the median household income per state. This was found here: https://worldpopulationreview.com/state-rankings/median-household-income-by-state
+<b>For this section we pulled from another dataset to get the median household income per state. This was found here:</b> https://worldpopulationreview.com/state-rankings/median-household-income-by-state
 
 ```{r}
 # Loading in the income into med_income
 med_income <- read.csv(here("DATA","median-household-income-by-state-[updated-august-2023].csv"))
 str(med_income)
 ```
-Once again this data must be cleaned because it has data for DC, Alaska and Hawaii, and the columns need to be renamed to allow for it to be made into a map.
+<b>Once again this data must be cleaned because it has data for DC, Alaska and Hawaii, and the columns need to be renamed to allow for it to be made into a map.</b>
 
 ```{r}
 #TODO, clean data by dropping rows
