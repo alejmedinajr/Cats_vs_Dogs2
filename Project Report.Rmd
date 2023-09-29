@@ -45,6 +45,12 @@ str(pet_data)
 colnames(pet_data) <- c("region","householdPerc",	"dogsPerc",	"avgNumDogs",	"catsPerc",	"avgNumCats",	"dogDevScore",	"jobDislikePerc",	"spend4kPerc")
 head(pet_data)
 ```
+
+Finally, we need to make all of the states lower cases so it can be joined with the state map data set.
+```{r}
+pet_data$region <- tolower(pet_data$region)
+```
+
 <b>After cleaning, all of the info on the dataset describe above is still true, other than the names of the columns being changed and dropping the row containing DC. Several column names were changed in order to shorten them, dogDevScore which stands for the dog devotion score, jobDislikePerc stands for the percentage of people that stayed at a job they disliked for their dog, and spend4kPerc stands for the percentage of people that would spend $4,000 to save their dog.</b> 
 
 
@@ -92,7 +98,6 @@ ggplot(pet_data, aes(x = dogDevScore, y = spend4kPerc))+
 
 
 ```{r}
-pet_data$region <- tolower(pet_data$region)
 state_map <- map_data("state")
 state_map_pets <- left_join(state_map,pet_data, by = "region")
 head(state_map_pets)
@@ -104,25 +109,57 @@ fourK_graph # View graph
 ```
 <br><b>Most states were under 45% in regards to whether they would spend up to $4k to save their dog. The states with higher percentages (45%-50%) were located along the mid West coast and the upper East coast.</b>
 
-### 4. Comapring Spacial correlation with areas where pet owners were willing to spend $4k to save their dog. 
+### 4. Comapring spacial correlation with areas where pet owners were willing to spend $4k to save their dog. 
 
-<b>For this section we pulled from another dataset to get the median household income per state. This was found here:</b> https://worldpopulationreview.com/state-rankings/median-household-income-by-state
+For this section we pulled from another dataset to get the median household income per state. This was found here: https://worldpopulationreview.com/state-rankings/median-household-income-by-state
 
 ```{r}
 # Loading in the income into med_income
 med_income <- read.csv(here("DATA","median-household-income-by-state-[updated-august-2023].csv"))
 str(med_income)
 ```
-<b>Once again this data must be cleaned because it has data for DC, Alaska and Hawaii, and the columns need to be renamed to allow for it to be made into a map.</b>
+Once again this data must be cleaned because it has data for DC, Alaska and Hawaii, and the columns need to be renamed to allow for it to be made into a map.
 
 ```{r}
-#TODO, clean data by dropping rows
-
+#Removes Alaska, Hawaii, and DC
+med_income <- subset(med_income, state != "Alaska")
+med_income <- subset(med_income, state != "Hawaii")
+med_income <- subset(med_income, state != "District of Columbia")
 
 # Renaming the columns for easier usage
 colnames(med_income) <- c("region","income")
-head(med_income)
+
+# Making all state names lower case
+med_income$region <- tolower(med_income$region)
+str(med_income)
 ```
 
+Now that the data has been cleaned, we can use it to create a map and compare it to. First, here is the map seeing the percentage of people that would spend 4K to save their dog.
+```{r}
+# Joining data set with state map
+state_map <- map_data("state")
+state_map_pets <- left_join(state_map,pet_data, by = "region")
+
+# Graph for the percentage of people that would pay 4k to save their dog
+pay4kGraph <- ggplot(state_map_pets, aes(x= long, y = lat, group = group)) +
+  geom_polygon(aes(fill = spend4kPerc)) +
+  scale_fill_viridis_c(option = "turbo")
+pay4kGraph
+```
+
+Next we'll plot the median income per state
+
+```{r}
+# Joining data set with state map
+state_map_med <- left_join(state_map,med_income, by = "region")
+
+# Graph for the percentage of people that would pay 4k to save their dog
+medGraph <- ggplot(state_map_med, aes(x= long, y = lat, group = group)) +
+  geom_polygon(aes(fill = income)) +
+  scale_fill_viridis_c(option = "turbo")
+medGraph
+```
+
+There is some correlation between the two maps. States with higher incomes such as California, Massachusetts, and New Jersey also have higher percentages of people that would spend \$4K to save their dogs. Similarly, states with lower income like New Mexico, Arkansas, and Oklahoma were less likely to save their dog for \$4K. This suggests that there is a correlation between median incomes and people's willingness/ability to spend \$4K to save their dog.
 ## General Conclusion
 <b>some stuff here</b>
