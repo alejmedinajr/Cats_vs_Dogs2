@@ -56,6 +56,8 @@ pet_data$region <- tolower(pet_data$region)
 
 ## Exploratory Data Analysis
 
+### 1.Percentages of households that own any sort of pet
+
 ```{r}
 pet_data$region <- tolower(pet_data$region)
 state_map <- map_data("state")
@@ -69,12 +71,16 @@ household_graph # View graph
 ```
 <BR><B>Most states had a total household percentage of pets higher than 55%. With this, we can know that it is more common for a household in the United States to have a pet than to not. </B><BR>
 
+### 2. Boxplots comparing dog versus cat ownership in households
+
 ```{r}
 ggplot(pet_data, aes(x=dogsPerc))+ geom_boxplot()
 ggplot(pet_data, aes(x=catsPerc))+ geom_boxplot()
 
 ```
 <BR><b>In both graphs we can see the distribution of higher percentages in the Dogs Percentages data; while the lower percentages are given to the Cats.  The median for dogs would be just below 40; while for cats the median would be just above 25. This median interpretation means that the distribution of dogs' percentages is higher than cats. This tells us the strong preference of people for owning dogs.</b><BR>
+
+### 3. Comparing dog devotion scores versus staying at a job they disliked and spending 4K to save their dog percentages
 
 ```{r}
 ggplot(pet_data, aes(x = dogDevScore, y = jobDislikePerc))+
@@ -97,29 +103,17 @@ ggplot(pet_data, aes(x = dogDevScore, y = spend4kPerc))+
 
 <BR><b>There was no clear correlation for the dog devotion score or the percent for each state of people willing to spend 4k to save their dog. Since there was no correlation, this simply means there was no clear trend to indicate that a higher likelihood of spending 4k on their dog would be matched by a higher dog devotion score.</b><BR> 
 
+### 4. Comparing spacial correlation with areas where pet owners were willing to spend $4k to save their dog. 
 
-```{r}
-state_map <- map_data("state")
-state_map_pets <- left_join(state_map,pet_data, by = "region")
-head(state_map_pets)
-fourK_graph <- ggplot(state_map_pets, aes(x= long, y = lat, group = group)) +
-  geom_polygon(aes(fill = spend4kPerc)) +
-  scale_fill_viridis_c() # Create map on total house percentage
-fourK_graph # View graph
-
-```
-<br><b>Most states were under 45% in regards to whether they would spend up to $4k to save their dog. The states with higher percentages (45%-50%) were located along the mid West coast and the upper East coast.</b>
-
-### 4. Comapring spacial correlation with areas where pet owners were willing to spend $4k to save their dog. 
-
-For this section we pulled from another dataset to get the median household income per state. This was found here: https://worldpopulationreview.com/state-rankings/median-household-income-by-state
+<b>For this section we pulled from another dataset to get the median household income per state. This was found here: https://worldpopulationreview.com/state-rankings/median-household-income-by-state</b>
 
 ```{r}
 # Loading in the income into med_income
 med_income <- read.csv(here("DATA","median-household-income-by-state-[updated-august-2023].csv"))
 str(med_income)
 ```
-Once again this data must be cleaned because it has data for DC, Alaska and Hawaii, and the columns need to be renamed to allow for it to be made into a map.
+
+<b>Once again this data must be cleaned because it has data for DC, Alaska and Hawaii, and the columns need to be renamed to allow for it to be made into a map.</b>
 
 ```{r}
 #Removes Alaska, Hawaii, and DC
@@ -135,7 +129,8 @@ med_income$region <- tolower(med_income$region)
 str(med_income)
 ```
 
-Now that the data has been cleaned, we can use it to create a map and compare it to. First, here is the map seeing the percentage of people that would spend 4K to save their dog.
+<b>Now that the data has been cleaned, we can use it to create a map and compare it to. First, here is the map seeing the percentage of people that would spend 4K to save their dog.</b>
+
 ```{r}
 # Joining data set with state map
 state_map <- map_data("state")
@@ -148,7 +143,7 @@ pay4kGraph <- ggplot(state_map_pets, aes(x= long, y = lat, group = group)) +
 pay4kGraph
 ```
 
-Next we'll plot the median income per state
+<b>Next we'll plot the median income per state</b>
 
 ```{r}
 # Joining data set with state map
@@ -161,10 +156,11 @@ medGraph <- ggplot(state_map_med, aes(x= long, y = lat, group = group)) +
 medGraph
 ```
 
-There is some correlation between the two maps. States with higher incomes such as California, Massachusetts, and New Jersey also have higher percentages of people that would spend \$4K to save their dogs. Similarly, states with lower income like New Mexico, Arkansas, and Oklahoma were less likely to save their dog for \$4K. This suggests that there is a correlation between median incomes and people's willingness/ability to spend \$4K to save their dog.
+<b>There is some correlation between the two maps. States with higher incomes such as California, Massachusetts, and New Jersey also have higher percentages of people that would spend \$4K to save their dogs. Similarly, states with lower income like New Mexico, Arkansas, and Oklahoma were less likely to save their dog for \$4K. This suggests that there is a correlation between median incomes and people's willingness/ability to spend \$4K to save their dog.</b>
 
 ## General Conclusion
 
+<b>
 1. Our pet ownership statistics data set had enough data to accurately answer all of our questions.
 
 2. A better way to answer these questions may involve making multiple graphs and comparing their complexities, going more in depth.
@@ -173,3 +169,4 @@ There is some correlation between the two maps. States with higher incomes such 
 An important aspect to also take into consideration when making a decision involving the data would be the preference of the type of pets that exist among people. After the analysis of our first and second questions we see a strong preference for dogs over cats; which is important to consider when we look at how much devotion exists for dogs when compared to other pets in the country.
 
 4. As stated above, there was a correlation between states incomes and their willingness to pay $4K to save their dog. This indicates that there is a corelation between the two. This indicates that even if a dog owner is very devoted to their dog, they may not be fincanically stable enough to make such a large payment, even if they wanted to.
+</b>
