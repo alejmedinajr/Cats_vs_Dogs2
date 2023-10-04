@@ -84,7 +84,7 @@ ggplot(pet_data, aes(x = dogDevScore, y = jobDislikePerc))+
   theme_dark()
 
 ```
-<BR><b>There was no clear correlation for the dog devotion score or the percent for each state of people willing to spend 4k to save their dog. Since there was no correlation, this simply means there was no clear trend to indicate that a higher likelihood of spending 4k on their dog would be matched by a higher dog devotion score.</b><BR> 
+<BR><b>There was no clear correlation for the willingness to stay at a disliked job for each state and the dog devotion score. Since there was no correlation, this simply means there was no clear trend to indicate that a higher likelihood of staying at a disliked job because of the dog would be matched by a higher dog devotion score.</b><BR> 
 
 ```{r}
 ggplot(pet_data, aes(x = dogDevScore, y = spend4kPerc))+
@@ -94,7 +94,8 @@ ggplot(pet_data, aes(x = dogDevScore, y = spend4kPerc))+
   theme_dark()
 
 ```
-<BR><b>There was no clear correlation for the willingness to stay at a disliked job for each state and the dog devotion score. Since there was no correlation, this simply means there was no clear trend to indicate that a higher likelihood of staying at a disliked job because of the dog would be matched by a higher dog devotion score.</b><BR> 
+
+<BR><b>There was no clear correlation for the dog devotion score or the percent for each state of people willing to spend 4k to save their dog. Since there was no correlation, this simply means there was no clear trend to indicate that a higher likelihood of spending 4k on their dog would be matched by a higher dog devotion score.</b><BR> 
 
 
 ```{r}
@@ -161,8 +162,8 @@ medGraph
 ```
 
 There is some correlation between the two maps. States with higher incomes such as California, Massachusetts, and New Jersey also have higher percentages of people that would spend \$4K to save their dogs. Similarly, states with lower income like New Mexico, Arkansas, and Oklahoma were less likely to save their dog for \$4K. This suggests that there is a correlation between median incomes and people's willingness/ability to spend \$4K to save their dog.
-## General Conclusion
 
+## General Conclusion
 
 1. Our pet ownership statistics data set had enough data to accurately answer all of our questions.
 
@@ -171,4 +172,4 @@ There is some correlation between the two maps. States with higher incomes such 
 3. Based on our findings, we would recommend decision makers to be aware of these statistics and what they mean for people and their pets. We found people’s dog devotion scores did not appear to correlate with whether or not they stayed at a job they disliked or were willing to spend $4k to save their dog. While people may have high devotion and care for their pets, it doesn’t mean they have the means to, or are willing to spend up to $4k on them or stay at a disliked job. With this, we can recommend decision makers to look more into pet ownership expenses, either before getting their pet or why the bills are costing so much in the first place. 
 An important aspect to also take into consideration when making a decision involving the data would be the preference of the type of pets that exist among people. After the analysis of our first and second questions we see a strong preference for dogs over cats; which is important to consider when we look at how much devotion exists for dogs when compared to other pets in the country.
 
-4. AS stated above, there was a correlation between states incomes and their willingness to pay $4K to save their dog. This indicates that there is a corelation between the two. This indicates that even if a dog owner is very devoted to their dog, they may not be fincanically stable enough to make such a large payment, even if they wanted to.
+4. As stated above, there was a correlation between states incomes and their willingness to pay $4K to save their dog. This indicates that there is a corelation between the two. This indicates that even if a dog owner is very devoted to their dog, they may not be fincanically stable enough to make such a large payment, even if they wanted to.
