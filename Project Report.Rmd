@@ -32,6 +32,8 @@ str(pet_data) # viewing the structure of the data
 ```
 <BR><b>As we go through the nature of the data, we can clearly see the dimensions of the data being 49 observations against 9 variables. These variables are the State, Total Household percentage, Dogs Percentage, Average Number of Dogs, Cats percentage, Average Number of cats, Dogs devotion score, Staying at a job they disliked for dog percentage and Would you spend 4k to save a dog percentage. The structure of the data tells us that the State is the only variable classified as a character; while the others are numeric.</b><BR>
 
+<b> The State variable refers to which U.S. state the other variables are applicable to, the Total Household Percentage variable refers to the percent of households that own a pet. The Dogs and Cats Percentages variables refer to the percentage of households that have dogs or cats. The Number of Dogs and Cats variables refer to the number of dogs or cats per household. The Dog Devotion score refers to how devoted dog owners are to their dogs on the basis of living on a tighter budget to afford their dog’s living expenses,  how likely they are to move to from an apartment to a house so that their dog can have a yard, and how likely they were to leave a job they liked because another company offered an at home position where they could be with their dog. The variable Staying at a Job They Disliked for Dog Percentage refers to if owners were willing to stay at a job they disliked because it allowed them to work from home or had a dog-friendly office. And finally, the variable Would You spend 4k to Save a Dog Percentage refers to whether dog owners would spend $4,000 or more out-of-pocket on life-saving medical care for their dogs. </b>
+
 ## Cleaning the Data
 <b>In our data set, Hawaii and Alaska were omitted and Washington DC only has data on the total household percentage. Because of this, we have decided to omit DC completely.</b>
 ```{r}
@@ -59,6 +61,8 @@ pet_data$region <- tolower(pet_data$region)
 
 ### 1.Percentages of households that own any sort of pet
 
+<b> We are going to look at how total pet ownership percentages affect a U.S. heat map based on how common pets are in these households. </b>
+
 ```{r}
 pet_data$region <- tolower(pet_data$region)
 state_map <- map_data("state")
@@ -73,6 +77,8 @@ household_graph # View graph
 <BR><B>Most states had a total household percentage of pets higher than 55%. With this, we can know that it is more common for a household in the United States to have a pet than to not. </B><BR>
 
 ### 2. Boxplots comparing dog versus cat ownership in households
+
+<b> Analysis of both the percentages of cats and dogs and the relationship between using a scatter plot to see the distribution. </b>
 
 ```{r}
 ggplot(pet_data, aes(x=dogsPerc))+ geom_boxplot()
@@ -104,9 +110,14 @@ ggplot(pet_data, aes(x = dogDevScore, y = spend4kPerc))+
 
 <BR><b>There was no clear correlation for the dog devotion score or the percent for each state of people willing to spend 4k to save their dog. Since there was no correlation, this simply means there was no clear trend to indicate that a higher likelihood of spending 4k on their dog would be matched by a higher dog devotion score.</b><BR> 
 
+<b>After analyzing the data through different statistical tools; we can conclude that there is no correlation between the willingness of someone to spend 4K on their pet and the devotion shown. The results help us understand that despite having a huge appreciation for pets; most people are not willing to spend a great amount of their money.
+In terms of the devotion to pets and staying in a job you don’t like, there is also no correlation between the variables. We can interpret that devotion to a pet is not a factor that affects the willingness of a person to stay working in a job they don’t like. 
+In both cases devotion appears not to affect the decisions of the owners of either quitting their job or the decision of spending more of their budget on the pets they have. </b>
+
 ### 4. Comparing spacial correlation with areas where pet owners were willing to spend $4k to save their dog. 
 
-<b>For this section we pulled from another dataset to get the median household income per state. This was found here: https://worldpopulationreview.com/state-rankings/median-household-income-by-state</b>
+<b>We also created a heat map to see if there is any spatial correlation in states and areas where pet owners were willing to spend $4k to save their dog.
+For this section we pulled from another dataset to get the median household income per state. This was found here: https://worldpopulationreview.com/state-rankings/median-household-income-by-state</b>
 
 ```{r}
 # Loading in the income into med_income
