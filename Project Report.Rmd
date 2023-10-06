@@ -46,7 +46,8 @@ colnames(pet_data) <- c("region","householdPerc",	"dogsPerc",	"avgNumDogs",	"cat
 head(pet_data)
 ```
 
-Finally, we need to make all of the states lower cases so it can be joined with the state map data set.
+<b> Finally, we need to make all of the states lower cases so it can be joined with the state map data set. </b>
+
 ```{r}
 pet_data$region <- tolower(pet_data$region)
 ```
